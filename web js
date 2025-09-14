@@ -1,0 +1,12 @@
+$(document).ready(function() {
+  $('#goToTruffled').click(function() {
+    window.location.href = 'https://truffled.lol';
+  });
+});$(document).ready(function() {
+  $('#goToTruffled').click(function() {
+    window.location.href = 'https://truffled.lol';
+  });
+  $('#goToCreatii').click(function() {
+    window.location.href = 'https://creatii.ro';
+  });
+});
