@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Web Browser</title>
+  <title>Encrypted Web Browser</title>
   <style>
     body { padding: 25px; font-family: Arial, sans-serif; }
     input[type="text"] { width: 60%; }
@@ -9,23 +9,34 @@
   </style>
 </head>
 <body>
-  <h2>Simple Web Browser</h2>
+  <h2>Encrypted Web Browser</h2>
   <input type="text" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)">
-  <button onclick="openSite()">Go</button>
-  <p id="msg"></p>
+  <button onclick="encryptAndGo()">Encrypt & Go</button>
+  <p id="encryptedUrl"></p>
   <iframe id="browserFrame"></iframe>
-
   <script>
-    function openSite() {
+    // Simple base64 encode/decode (not true "encryption")
+    function encrypt(input) {
+      return btoa(input);
+    }
+    function decrypt(input) {
+      try {
+        return atob(input);
+      } catch {
+        return "";
+      }
+    }
+    function encryptAndGo() {
       const url = document.getElementById('urlInput').value.trim();
       if (!url) {
-        document.getElementById('msg').textContent = "Please enter a URL.";
+        document.getElementById('encryptedUrl').textContent = "Please enter a URL.";
         return;
       }
-      // Add protocol if missing
       const finalUrl = url.startsWith('http://') || url.startsWith('https://') ? url : 'https://' + url;
-      document.getElementById('browserFrame').src = finalUrl;
-      document.getElementById('msg').textContent = "";
+      const encrypted = encrypt(finalUrl);
+      document.getElementById('encryptedUrl').textContent = "Encrypted URL: " + encrypted;
+      const decrypted = decrypt(encrypted);
+      document.getElementById('browserFrame').src = decrypted;
     }
   </script>
 </body>
