@@ -1,0 +1,22 @@
+<h2>web</h2>
+<input type="text" id="fileUrl" placeholder="Enter file URL" style="width:60%;">
+<button onclick="downloadFile()">open</button>
+<p id="downloadMsg"></p>
+
+<script>
+function downloadFile() {
+  const url = document.getElementById('fileUrl').value;
+  if (!url) {
+    document.getElementById('downloadMsg').textContent = "Please enter a valid URL.";
+    return;
+  }
+  // Create a temporary anchor element and trigger download
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  document.getElementById('downloadMsg').textContent = "Download initiated (if file is accessible).";
+}
+</script>
