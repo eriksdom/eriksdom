@@ -1,43 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Encrypted Web Browser</title>
+  <title>Web Browser with Extension Warning</title>
   <style>
     body { padding: 25px; font-family: Arial, sans-serif; }
-    input[type="text"] { width: 60%; }
+    #warning { color: red; font-weight: bold; }
     iframe { width: 100%; height: 500px; border: 1px solid #ccc; margin-top: 15px; }
   </style>
 </head>
 <body>
-  <h2>Encrypted Web Browser</h2>
+  <h2>Web Browser with Extension Warning</h2>
+  <div id="warning"></div>
   <input type="text" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)">
-  <button onclick="encryptAndGo()">Encrypt & Go</button>
-  <p id="encryptedUrl"></p>
+  <button onclick="openSite()">Go</button>
   <iframe id="browserFrame"></iframe>
+  
   <script>
-    // Simple base64 encode/decode (not true "encryption")
-    function encrypt(input) {
-      return btoa(input);
+    // Detect AdBlock by creating a bait element
+    function detectAdBlock() {
+      var bait = document.createElement('div');
+      bait.className = 'adsbox';
+      bait.style.height = '1px';
+      bait.style.position = 'absolute';
+      bait.style.top = '-1000px';
+      document.body.appendChild(bait);
+      setTimeout(function() {
+        if (bait.offsetHeight === 0) {
+          document.getElementById('warning').textContent = 
+            "Warning: AdBlock or similar extension detected!";
+        }
+        document.body.removeChild(bait);
+      }, 100);
     }
-    function decrypt(input) {
-      try {
-        return atob(input);
-      } catch {
-        return "";
-      }
-    }
-    function encryptAndGo() {
+
+    function openSite() {
       const url = document.getElementById('urlInput').value.trim();
-      if (!url) {
-        document.getElementById('encryptedUrl').textContent = "Please enter a URL.";
-        return;
-      }
+      if (!url) return;
       const finalUrl = url.startsWith('http://') || url.startsWith('https://') ? url : 'https://' + url;
-      const encrypted = encrypt(finalUrl);
-      document.getElementById('encryptedUrl').textContent = "Encrypted URL: " + encrypted;
-      const decrypted = decrypt(encrypted);
-      document.getElementById('browserFrame').src = decrypted;
+      document.getElementById('browserFrame').src = finalUrl;
     }
+
+    // Run detection on page load
+    window.onload = detectAdBlock;
   </script>
 </body>
 </html>
