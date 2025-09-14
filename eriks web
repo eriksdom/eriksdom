@@ -1,47 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Web Browser with Extension Warning</title>
+  <title>Simple Web Browser</title>
   <style>
     body { padding: 25px; font-family: Arial, sans-serif; }
-    #warning { color: red; font-weight: bold; }
-    iframe { width: 100%; height: 500px; border: 1px solid #ccc; margin-top: 15px; }
+    input[type="text"] { width: 60%; font-size: 16px; }
+    button { padding: 8px 16px; font-size: 16px; }
+    iframe { width: 100%; height: 500px; border: 1px solid #ccc; margin-top: 18px; border-radius: 8px; }
+    #msg { color: red; margin-top: 10px; }
   </style>
 </head>
 <body>
-  <h2>Web Browser with Extension Warning</h2>
-  <div id="warning"></div>
+  <h2>Web Browser Unblocker</h2>
   <input type="text" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)">
   <button onclick="openSite()">Go</button>
+  <div id="msg"></div>
   <iframe id="browserFrame"></iframe>
-  
   <script>
-    // Detect AdBlock by creating a bait element
-    function detectAdBlock() {
-      var bait = document.createElement('div');
-      bait.className = 'adsbox';
-      bait.style.height = '1px';
-      bait.style.position = 'absolute';
-      bait.style.top = '-1000px';
-      document.body.appendChild(bait);
-      setTimeout(function() {
-        if (bait.offsetHeight === 0) {
-          document.getElementById('warning').textContent = 
-            "Warning: AdBlock or similar extension detected!";
-        }
-        document.body.removeChild(bait);
-      }, 100);
-    }
-
     function openSite() {
       const url = document.getElementById('urlInput').value.trim();
-      if (!url) return;
+      if (!url) {
+        document.getElementById('msg').textContent = "Please enter a URL.";
+        return;
+      }
+      // Add protocol if missing
       const finalUrl = url.startsWith('http://') || url.startsWith('https://') ? url : 'https://' + url;
       document.getElementById('browserFrame').src = finalUrl;
+      document.getElementById('msg').textContent = "";
     }
-
-    // Run detection on page load
-    window.onload = detectAdBlock;
   </script>
 </body>
 </html>
