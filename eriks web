@@ -1,1 +1,16 @@
-https://weslack.com/uv/service/hvtrs8%2F-wuw%2Cntific.aoo%2Fgn%2Fuq%2Flevwmriilg-ppofuatq%2Fkndili%60ald-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Truffled Portal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="portal">
+    <h1>Welcome to Truffled Portal</h1>
+    <button id="goToTruffled">Go to Truffled.lol</button>
+    <button id="goToCreatii">Go to Creatii.ro</button>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
