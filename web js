@@ -1,12 +1,27 @@
 $(document).ready(function() {
-  $('#goToTruffled').click(function() {
-    window.location.href = 'https://truffled.lol';
+  $('#goBtn').click(function() {
+    let url = $('#urlInput').val();
+    if (!/^https?:\/\//.test(url)) {
+      url = 'https://' + url;
+    }
+    $('#webFrame').attr('src', url);
   });
 });$(document).ready(function() {
-  $('#goToTruffled').click(function() {
-    window.location.href = 'https://truffled.lol';
-  });
-  $('#goToCreatii').click(function() {
-    window.location.href = 'https://creatii.ro';
+  $('#goBtn').click(function() {
+    let input = $('#urlInput').val().trim();
+    let url = '';
+
+    if (input === '') {
+      url = 'https://www.google.com';
+    } else if (/^https?:\/\//.test(input)) {
+      url = input;
+    } else if (/^[\w\-]+\.[a-z]{2,}/i.test(input)) {
+      // Looks like a domain
+      url = 'https://' + input;
+    } else {
+      // Treat as a search query
+      url = 'https://www.google.com/search?q=' + encodeURIComponent(input);
+    }
+    $('#webFrame').attr('src', url);
   });
 });
