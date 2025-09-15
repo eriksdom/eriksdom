@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Unblocked Web Browser</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="browser-container">
-    <h1>Unblocked Web Browser</h1>
-    <input type="text" id="urlInput" placeholder="Enter URL (e.g. https://example.com)">
-    <button id="goBtn">Go</button>
-    <iframe id="webFrame" src="" frameborder="0"></iframe>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="script.js"></script>
-</body>
-</html>
+<a href="#" onclick="launch(); return false;"><progress></progress></a>
+<script>
+function launch() {
+  try {
+    fetch("https://cdn.jsdelivr.net/gh/gn-math/gn-math.github.io@main/singlefile.html?t=" + Date.now())
+      .then(response => response.text())
+      .then(html => {
+        document.documentElement.innerHTML = html;
+        document.documentElement.querySelectorAll('script').forEach(oldScript => {
+          const newScript = document.createElement('script');
+          if (oldScript.src) {
+            newScript.src = oldScript.src;
+          } else {
+            newScript.textContent = oldScript.textContent;
+          }
+          document.body.appendChild(newScript);
+        });
+      });
+  } catch (error) {
+    console.error('error:', error);
+  }
+}
+</script>
